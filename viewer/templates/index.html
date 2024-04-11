@@ -1,0 +1,187 @@
+<!-- Copyright (c) Meta Platforms, Inc. and affiliates.
+
+This source code is licensed under the MIT license found in the
+LICENSE file in the root directory of this source tree. -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>OpenEQA Dataset Viewer</title>
+    <style>
+        .center {
+            margin: auto;
+            width: 70%;
+            padding: 10px;
+        }
+
+        .center-text {
+            margin: auto;
+            width: 40%;
+            padding: 10px;
+        }
+
+        .content {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            font-size: large;
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            margin: 10px;
+            padding: 10px;
+        }
+
+        p {
+            margin: 2px;
+            padding: 2px;
+        }
+
+        video {
+            width: 70%;
+            height: 50vh;
+            display: block;
+            margin: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #484848;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #585858;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css>
+</head>
+
+<body>
+    <div class="center-text">
+        <center>
+            <h1>OpenEQA Dataset Viewer</h1>
+        </center>
+    </div>
+    <div class="video-container center content">
+        <p id="video-path"></p>
+        <center>
+            <video id="video" controls autoplay muted></video>
+        </center>
+    </div>
+    <div id="qa" class="center-text content">
+        <p id="question"></p>
+        <p id="answer"></p>
+    </div>
+    <div class="buttons center">
+        <center>
+            <button id="previous">&lt;</button>
+            <button id="random"><i class="fas fa-random"></i></button>
+            <button id="next">&gt;</button>
+        </center>
+    </div>
+
+    <script>
+        var my_data;
+        var my_index = 0;
+
+        function addData() {
+            var index = my_data.index;
+
+            var video_path = my_data.video_path;
+            $("#video-path").empty();
+            $("#video-path").append('<center><em>' + video_path + '</em></center>');
+
+            var currentVideoUrl = $("#video").attr("src");
+            var newVideoUrl = "/static/videos/" + video_path;
+            if (currentVideoUrl != newVideoUrl) {
+                $("#video").attr("src", newVideoUrl);
+            }
+
+            var question = my_data.question;
+            $("#question").empty();
+            $("#question").append('[' + index + '] Q: ' + question);
+
+            var answer = my_data.answer;
+            $("#answer").empty();
+            $("#answer").append('[' + index + '] A: ' + answer)
+        }
+
+        function loadVideo() {
+            $.ajax({
+                url: "/get_video",
+                type: "POST",
+                data: JSON.stringify({ index: my_index }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    my_data = data;
+                    addData();
+                }
+            });
+        }
+
+        // button press
+        $("#previous").click(function () {
+            my_index--;
+            loadVideo();
+            this.blur();
+        });
+        $("#random").click(function () {
+            $.ajax({
+                url: "/get_random_index",
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    my_index = data["index"];
+                    loadVideo();
+                }
+            });
+            this.blur();
+        });
+        $("#next").click(function () {
+            my_index++;
+            loadVideo();
+            this.blur();
+        });
+
+        // keypress
+        $(document).keydown(function (e) {
+            if (e.keyCode == 37) {
+                $("#previous").click();
+            }
+            if (e.keyCode == 39) {
+                $("#next").click();
+            }
+            if (e.keyCode == 32 && e.target == document.body) {
+                e.preventDefault();
+            }
+            if (e.keyCode == 32 && !$("#video").is(":focus")) {
+                var video = $("#video").get(0);
+                if (video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            }
+        });
+
+        loadVideo();
+
+        $(document).ready(function () {
+            $("#video").get(0).play();
+        });
+    </script>
+</body>
+
+</html>

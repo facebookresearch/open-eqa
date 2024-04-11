@@ -1,0 +1,23 @@
+[
+  {
+    "question": "How many chairs are around the dining table?",
+    "answer": "Eight chairs",
+    "category": "object localization",
+    "question_id": "f15fbfbb-eb0f-41e7-9d33-bc75e48e62d1",
+    "episode_history": "assets/open-eqa-hm3d-demo"
+  },
+  {
+    "question": "If I enter the home through the entrance near the plants, which way should I turn to go to the bedroom?",
+    "answer": "Don't turn. Keep walking straight.",
+    "category": "spatial understanding",
+    "question_id": "de9d3196-2407-4c5a-b3ad-05ed7bf376a2",
+    "episode_history": "assets/open-eqa-hm3d-demo"
+  },
+  {
+    "question": "In which room does this home have exercise equipment?",
+    "answer": "Bedroom",
+    "category": "object localization",
+    "question_id": "b0dafc4b-6a1c-4048-913c-90867c124367",
+    "episode_history": "assets/open-eqa-hm3d-demo"
+  }
+]
