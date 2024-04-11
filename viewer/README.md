@@ -57,7 +57,7 @@ The quick start instructions above allow viewing question-answer pairs from the 
 
 ### ScanNet Setup
 
-Step 1: Download ScanNet data following the instructions [here](data#ScanNet). Note: only the RGB frames from ScanNet are used to generate episode history videos in step 2.
+Step 1: Download ScanNet data following the instructions [here](../data#ScanNet). Note: only the RGB frames from ScanNet are used to generate episode history videos in step 2.
 
 Step 2: Convert the RGB frames into mp4 files.
 
