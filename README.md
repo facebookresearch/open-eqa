@@ -1,6 +1,6 @@
 # OpenEQA: Embodied Question Answering in the Era of Foundation Models
 
-[[paper](https://open-eqa.github.io/assets/pdfs/openeqa_arxiv.pdf)]
+[[paper](https://open-eqa.github.io/assets/pdfs/paper.pdf)]
 [[project](https://open-eqa.github.io)]
 [[dataset](data)]
 [[bibtex](#citing-openeqa)]
