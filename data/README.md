@@ -47,7 +47,7 @@ For example, on a headless server use:
 conda install habitat-sim==0.2.5 headless -c conda-forge -c aihabitat
 ```
 
-**Step 2:** Download the [HM3D](https://aihabitat.org/datasets/hm3d) validation data by following the instructions [here](https://github.com/facebookresearch/habitat-sim/blob/main/DATASETS.md#habitat-matterport-3d-research-dataset-hm3d).
+**Step 2:** Download the [HM3D](https://aihabitat.org/datasets/hm3d) validation data by first following the instructions [here](https://github.com/facebookresearch/habitat-sim/blob/main/DATASETS.md#habitat-matterport-3d-research-dataset-hm3d) to get access to the dataset.
 
 Then, use your api token-id and token-secret with this command:
 
@@ -115,7 +115,7 @@ Afterwards, your top-level directory structure should look like this:
 
 **Step 1:** Download [ScanNet](http://www.scan-net.org) by following the instructions [here](https://github.com/ScanNet/ScanNet#scannet-data).
 
-Place the data in `data/raw/scannet` folder. Afterwards, your top-level directory should look like this:
+Place the data in `data/raw/scannet`. Afterwards, your top-level directory should look like this:
 
 ```text
 |- data
