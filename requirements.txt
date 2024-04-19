@@ -6,7 +6,9 @@ tqdm==4.66.2
 opencv-python==4.9.0.80
 imageio==2.34.0
 pypng==0.20220715.0
-opencv-python
-matplotlib
-tqdm
-natsort
+matplotlib==3.8.0
+natsort==8.4.0
+torch==2.2.2
+transformers==4.39.3
+accelerate==0.29.3
+bitsandbytes==0.43.1
