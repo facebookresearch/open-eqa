@@ -139,7 +139,12 @@ def main(args: argparse.Namespace):
 
         # generate answer
         question = item["question"]
-        answer = ask_question(model=model, question=question)
+        answer = ask_question(
+            model=model, 
+            question=question, 
+            max_tokens=args.max_tokens, 
+            temperature=args.temperature,
+        )
 
         # store results
         results.append({"question_id": question_id, "answer": answer})
