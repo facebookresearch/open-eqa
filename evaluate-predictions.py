@@ -73,7 +73,7 @@ def main(args: argparse.Namespace):
     print("found {:,} results".format(len(results)))
 
     # check that results and dataset match
-    if not args.force:
+    if not args.force and not args.dry_run:
         assert len(dataset_question_ids) == len(results_question_ids)
         assert set(dataset_question_ids) == set(results_question_ids)
 
