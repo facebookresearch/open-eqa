@@ -17,8 +17,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--dataset",
         type=Path,
-        default="datasets/open-eqa-v0.json",
-        help="path to open-eqa dataset (default: /datasets/open-eqa-v0.json)",
+        default="data/open-eqa-v0.json",
+        help="path to open-eqa dataset (default: data/open-eqa-v0.json)",
     )
     parser.add_argument(
         "--scannet-root",
