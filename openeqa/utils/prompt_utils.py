@@ -14,6 +14,7 @@ PROMPT_NAME_TO_PATH = {
     "gpt4v": DEFAULT_DATA_DIR / Path("gpt4v.txt"),
     "claude3-vision": DEFAULT_DATA_DIR / Path("claude3-vision.txt"),
     "gemini-pro-vision": DEFAULT_DATA_DIR / Path("gemini-pro-vision.txt"),
+    "idefics": DEFAULT_DATA_DIR / Path("idefics.txt"),
 }
 
 
