@@ -62,6 +62,7 @@ def load_sim(path: Path) -> habitat_sim.Simulator:
     sensor_position = (
         agent_state.sensor_states["rgb"].position[1] - agent_state.position[1]
     )
+    scene_id = scene_id.replace('/datasets01/hm3d/090121/val/', 'data/scene_datasets/hm3d/val/')
     cfg = get_config(scene_id=scene_id, sensor_position=sensor_position)
     return habitat_sim.Simulator(cfg)
 
