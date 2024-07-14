@@ -12,16 +12,21 @@ import openai
 from tenacity import retry, stop_after_attempt, wait_random_exponential
 from openai import AzureOpenAI
 
+openai_client = None
 def set_openai_key(key: Optional[str] = None):
     if key is None:
         assert "OPENAI_API_KEY" in os.environ
         key = os.environ["OPENAI_API_KEY"]
-    openai.api_key = key
 
+    global openai_client
+    openai_client = AzureOpenAI(
+    	api_key=key,
+    	api_version="2024-05-01-preview",
+    	azure_endpoint="https://hkust.azure-api.net"
+    )
 
 def prepare_openai_messages(content: str):
     return [{"role": "user", "content": content}]
-
 
 def prepare_openai_vision_messages(
     prefix: Optional[str] = None,
@@ -66,8 +71,8 @@ def call_openai_api(
     temperature: float = 0.2,
     verbose: bool = False,
 ):
-    client = openai.OpenAI()
-    completion = client.chat.completions.create(
+    global openai_client
+    completion = openai_client.chat.completions.create(
         model=model,
         messages=messages,
         seed=seed,
@@ -86,6 +91,6 @@ if __name__ == "__main__":
     messages = prepare_openai_messages("What color are apples?")
     print("input:", messages)
 
-    model = "gpt-4-vision-preview"
+    model = "gpt-4o"
     output = call_openai_api(messages, model=model, max_tokens=512, temperature=1.0)
     print("output: {}".format(output))

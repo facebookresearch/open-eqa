@@ -3,14 +3,23 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+import os
 import traceback
 from typing import Optional
 
-from openeqa.utils.openai_utils import (
-    call_openai_api,
-    prepare_openai_messages,
-    set_openai_key,
-)
+if os.environ.get('OPENAI_AZURE_DEPLOYMENT') == '1':
+    from openeqa.utils.openai_azure_utils import (
+        call_openai_api,
+        prepare_openai_messages,
+        set_openai_key,
+    )
+else:
+    from openeqa.utils.openai_utils import (
+        call_openai_api,
+        prepare_openai_messages,
+        set_openai_key,
+    )
+
 from openeqa.utils.prompt_utils import load_prompt
 
 
@@ -32,7 +41,7 @@ def get_llm_match_score(
     prediction: str,
     extra_answers: Optional[list] = None,
     openai_key: Optional[str] = None,
-    openai_model: str = "gpt-4-1106-preview",
+    openai_model: str = "gpt-4o",
     openai_seed: int = 1234,
     openai_max_tokens: int = 32,
     openai_temperature: float = 0.2,
