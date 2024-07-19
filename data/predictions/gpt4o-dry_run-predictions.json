@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What is the white object on the wall above the TV?",
+    "answer": "The white object on the wall above the TV is an air conditioning unit.",
+    "category": "object recognition",
+    "question_id": "f2e82760-5c3c-41b1-88b6-85921b9e7b32",
+    "episode_history": "hm3d-v0/000-hm3d-BFRyYbPCCPE"
+  },
+  {
+    "question": "What material is the ceiling in the living room?",
+    "answer": "The ceiling in the living room appears to be made of wood, as indicated by the visible wooden planks in the images.",
+    "category": "attribute recognition",
+    "question_id": "7447d782-d1a7-4c87-86dc-b5eafc5a0f76",
+    "episode_history": "hm3d-v0/000-hm3d-BFRyYbPCCPE"
+  },
+  {
+    "question": "What color is the staircase railing?",
+    "answer": "The staircase railing is dark brown.",
+    "category": "attribute recognition",
+    "question_id": "e2ccf6f4-22a9-47d1-ab8d-a05a13435b82",
+    "episode_history": "hm3d-v0/000-hm3d-BFRyYbPCCPE"
+  },
+  {
+    "question": "What is in between the two picture frames on the blue wall in the living room?",
+    "answer": "There is an air conditioning unit in between the two picture frames on the blue wall in the living room.",
+    "category": "spatial understanding",
+    "question_id": "c841bb52-1cec-46d7-bb83-8c99b5c66fa8",
+    "episode_history": "hm3d-v0/000-hm3d-BFRyYbPCCPE"
+  },
+  {
+    "question": "Is there room on the dining table to eat?",
+    "answer": "Yes, there appears to be room on the dining table to eat. The table is visible in several images and does not seem to be overly cluttered.",
+    "category": "spatial understanding",
+    "question_id": "79344680-6b45-4531-8789-ad0f5ef85b3b",
+    "episode_history": "hm3d-v0/000-hm3d-BFRyYbPCCPE"
+  }
+]
