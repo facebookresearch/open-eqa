@@ -73,15 +73,14 @@ def main(args: argparse.Namespace):
     
     # Load Dataset
     eqa_data = json.load(open("data/open-eqa-v0.json"))
-    hm3d_eqa_data = list(filter(lambda x: 'hm3d-v0' in x['episode_history'], eqa_data))
     if args.dry_run:
-        hm3d_eqa_data = hm3d_eqa_data[:5]
+        eqa_data = eqa_data[:5]
         
-    print(f'#HM3D EQA : {len(hm3d_eqa_data)} instances')
+    print(f'#EQA : {len(eqa_data)} instances')
     print('\nTop-5 Samples:')
-    print(json.dumps(hm3d_eqa_data[:5], indent=2))
+    print(json.dumps(eqa_data[:5], indent=2))
 
-    for i, item in tqdm(enumerate(hm3d_eqa_data)):
+    for i, item in tqdm(enumerate(eqa_data)):
         q = item["question"]
         g = item["answer"]
 
@@ -120,7 +119,7 @@ def main(args: argparse.Namespace):
             print("Q{}: {} | G: {} | P: {}\n".format(i, q, g, a))
 
     # Dump Results
-    json.dump(hm3d_eqa_data, open(args.output_path, 'w'), indent=2)
+    json.dump(eqa_data, open(args.output_path, 'w'), indent=2)
 
 if __name__ == "__main__":
     main(parse_args())
