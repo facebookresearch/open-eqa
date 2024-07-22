@@ -3,10 +3,15 @@ import json
 import glob
 import argparse
 from pathlib import Path
-
+import sys
 import numpy as np
 from tqdm import tqdm
 
+try:
+    import LLM.VideoLLaMA2.predict_utils as videollama2_predict
+    import LLM.LLaVANeXT.predict_utils as llava_next_predict 
+except:
+    pass
 # os.environ['OPENAI_API_KEY'] = '<OPENAI_API_KEY>'
 # os.environ['OPENAI_AZURE_DEPLOYMENT'] = '1'
 
@@ -71,6 +76,14 @@ def main(args: argparse.Namespace):
     # Ensure that OpenAI API key is set
     assert "OPENAI_API_KEY" in os.environ
     
+
+    # Load Model
+    if args.method == 'videollama2':
+        tokenizer, model, processor = videollama2_predict.load_model()
+        
+    elif args.method == 'llava-next':
+        tokenizer, model, processor, for_get_frames_num = llava_next_predict.load_model()
+
     # Load Dataset
     eqa_data = json.load(open("data/open-eqa-v0.json"))
     if args.dry_run:
@@ -102,9 +115,14 @@ def main(args: argparse.Namespace):
                 openai_key=os.environ["OPENAI_API_KEY"],
                 openai_model="gpt-4o",
             )
-        elif args.method == 'video-lm':
-            # TODO: Video LM
-            pass
+        elif args.method == 'videollama2':
+            tensor = videollama2_predict.get_video_tensor(video_path, processor, model)
+            a = videollama2_predict.generate_reply(tensor, q, model, tokenizer)
+            
+        elif args.method == 'llava-next':
+            tensor = llava_next_predict.get_video_tensor(video_path, processor, model, for_get_frames_num)
+            a = llava_next_predict.generate_reply(tensor, q, model, tokenizer)
+
         elif args.method == 'concept-graph':
             # TODO: Concept Graph
             pass
