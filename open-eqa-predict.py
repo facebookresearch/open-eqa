@@ -11,16 +11,19 @@ try:
     import LLM.VideoLLaMA2.predict_utils as videollama2_predict
     import LLM.LLaVANeXT.predict_utils as llava_next_predict 
 except:
-    pass
+    print('cannot load video llm')
 # os.environ['OPENAI_API_KEY'] = '<OPENAI_API_KEY>'
 # os.environ['OPENAI_AZURE_DEPLOYMENT'] = '1'
 
-if os.environ.get('OPENAI_AZURE_DEPLOYMENT') == '1':
-    from openeqa.baselines.gpt4_azure import ask_question as ask_blind_gpt4
-    from openeqa.baselines.gpt4o_azure import ask_question as ask_gpt4o
-else:
-    from openeqa.baselines.gpt4 import ask_question as ask_blind_gpt4
-    from openeqa.baselines.gpt4v import ask_question as ask_gpt4o
+try:
+    if os.environ.get('OPENAI_AZURE_DEPLOYMENT') == '1':
+        from openeqa.baselines.gpt4_azure import ask_question as ask_blind_gpt4
+        from openeqa.baselines.gpt4o_azure import ask_question as ask_gpt4o
+    else:
+        from openeqa.baselines.gpt4 import ask_question as ask_blind_gpt4
+        from openeqa.baselines.gpt4v import ask_question as ask_gpt4o
+except:
+    print('cannot load openeqa')
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
@@ -73,10 +76,6 @@ def parse_args() -> argparse.Namespace:
     return args
     
 def main(args: argparse.Namespace):
-    # Ensure that OpenAI API key is set
-    assert "OPENAI_API_KEY" in os.environ
-    
-
     # Load Model
     if args.method == 'videollama2':
         tokenizer, model, processor = videollama2_predict.load_model()
@@ -96,14 +95,20 @@ def main(args: argparse.Namespace):
     for i, item in tqdm(enumerate(eqa_data)):
         q = item["question"]
         g = item["answer"]
+        episode_history = item["episode_history"]
+        last_episode_history  = None
 
         if args.method == 'blind-gpt4':
+            # Ensure that OpenAI API key is set
+            assert "OPENAI_API_KEY" in os.environ
             a = ask_blind_gpt4(
                 question=q,
                 openai_model="gpt-4o",
             )
         elif args.method == 'gpt4o':
-            image_paths = sorted(glob.glob(f"data/frames/{item['episode_history']}/*.png"))
+            # Ensure that OpenAI API key is set
+            assert "OPENAI_API_KEY" in os.environ
+            image_paths = sorted(glob.glob(f"data/frames/{episode_history}/*.png"))
             filt_image_paths = []
             for depth_img, rgb_img in zip(image_paths[::16], image_paths[1::16]):
                 filt_image_paths.append(depth_img)
@@ -116,18 +121,24 @@ def main(args: argparse.Namespace):
                 openai_model="gpt-4o",
             )
         elif args.method == 'videollama2':
-            tensor = videollama2_predict.get_video_tensor(video_path, processor, model)
+            if last_episode_history != episode_history:
+                video_path = f"/share/open-eqa/videos/{episode_history}-0.mp4"
+                tensor = videollama2_predict.get_video_tensor(video_path, processor, model)
+                last_episode_history = episode_history
             a = videollama2_predict.generate_reply(tensor, q, model, tokenizer)
             
         elif args.method == 'llava-next':
-            tensor = llava_next_predict.get_video_tensor(video_path, processor, model, for_get_frames_num)
-            a = llava_next_predict.generate_reply(tensor, q, model, tokenizer)
+            if last_episode_history != episode_history:
+                video_path = f"/share/open-eqa/videos/{episode_history}-0.mp4"
+                tensor = llava_next_predict.get_video_tensor(video_path, processor, model, for_get_frames_num)
+                last_episode_history = episode_history
+            a = llava_next_predict.generate_reply(video_path, tensor, q, model, tokenizer)
 
         elif args.method == 'concept-graph':
             # TODO: Concept Graph
             pass
         else:
-            raise ValueError(f'method `{method}` is not supported')
+            raise ValueError(f'method `{args.method}` is not supported')
 
         # Set answer
         item["answer"] = a
