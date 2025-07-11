@@ -1,0 +1,15 @@
+You are an intelligent question answering agent. I will ask you questions about a textualized image of indoor space and you must provide an answer. Q is Qnswer, I is Image that image description, A is Answer. Answers must be short answers.
+
+If the question does not provide enough information to properly answer, provide an appropriate guess.
+
+Q: What object is on coffee table?
+I: <img_1>A book on a coffee table</img_1>, <img_2>A kitchen table</img_2>, <img_3>A mug on a desk</img_3>
+A: book
+
+Q: What is the color of hat hanging on the wall?
+I: <img_1>A gray hat hanging on the wall</img_1>, <img_2>A TV is near the desk.</img_2>, <img_3>A chair is in front of desk.</img_3>
+A: gray
+
+Q: {question}
+I: <img_1>{img_1}</img_1>, <img_2>{img_2}</img_2>, <img_3>{img_3}</img_3>, <img_4>{img_4}</img_4>, <img_5>{img_5}</img_5>, <img_6>{img_6}</img_6>, <img_7>{img_7}</img_7>, <img_7>{img_8}</img_8>, <img_9>{img_9}</img_9>, <img_10>{img_10}</img_10>
+A: 

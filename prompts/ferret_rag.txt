@@ -1,0 +1,15 @@
+You are an intelligent question answering agent. I will ask you questions about a textualized image of indoor space and you must provide an think and answer. You must generate answer after thinking. The image description contains [object] [object's bounding box coordinates]. Q is Qnswer, I is Image, A is Answer. Answers must be short answers.
+
+If the question does not provide enough information to properly answer, provide an appropriate guess.
+
+Q: What machine is on top of the stove?
+I: <img_1>The image portrays a modern kitchen [140, 80, 960, 920] with a sleek design, featuring white cabinets [150, 90, 850, 400] and a dark countertop [170, 420, 890, 600]. The stove [380, 500, 620, 650] is centrally positioned, with a microwave [400, 300, 600, 450] placed directly above it. The microwave has a digital display and buttons on the right side, indicating its functionality.</img_1>, <img_2>The backsplash consists of tiled patterns [160, 280, 850, 320], adding texture to the space. Various cooking utensils [200, 530, 370, 650] and spice containers [640, 510, 750, 600] are neatly arranged on the counter.</img_2>, <img_3>The refrigerator [50, 120, 240, 800] is visible on the left side, blending seamlessly with the overall kitchen decor. The kitchen is well-lit, likely from both ceiling lights and natural light entering through a window [750, 100, 950, 500].</img_3>
+A: The microwave
+
+Q: What piece of furniture is in the middle of the bedroom?
+I: <img_1>The image shows a bedroom [329, 125, 998, 950] with soft lighting and a neutral color palette, creating a cozy atmosphere. In the center of the room, there is a large bed [410, 376, 890, 728] with a neatly arranged blanket and pillows.<img_1>, <img_2>A nightstand [245, 500, 370, 690] is positioned next to the bed, holding a lamp [278, 430, 320, 510] and a small decorative object.<img_2>, <img_3>A window [65, 145, 290, 540] on the left side of the room allows natural light to enter, complementing the artificial lighting from the ceiling fixture. On the right side, a dresser [680, 400, 950, 690] with a mirror is visible, with various personal items placed on top. A rug [370, 750, 870, 950] covers a portion of the wooden floor, enhancing the warmth of the room. The arrangement of furniture highlights the bed as the focal point of the bedroom.</img_3>
+A: a bed
+
+Q: {question}
+I: <img_1>{img_1}</img_1>, <img_2>{img_2}</img_2>, <img_3>{img_3}</img_3>
+A: 

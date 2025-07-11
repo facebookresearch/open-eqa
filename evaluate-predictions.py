@@ -78,17 +78,19 @@ def main(args: argparse.Namespace):
         assert set(dataset_question_ids) == set(results_question_ids)
 
     # load scores
-    all_scores = {}
+    all_scores = []
     if args.output_path.exists():
         all_scores = json.load(args.output_path.open("r"))
         print("found {:,} existing scores".format(len(all_scores)))
+    complete_question_id = [item["question_id"] for item in all_scores]
 
     # evaluate predictions
-    for idx, question_id in enumerate(tqdm(results_question_ids)):
+    for idx, item in enumerate(tqdm(results)):
         if args.dry_run and idx >= 5:
             break
 
-        if question_id in all_scores:
+        question_id = item["question_id"]
+        if question_id in complete_question_id:
             continue
 
         item = question_id_to_item[question_id]
@@ -112,8 +114,10 @@ def main(args: argparse.Namespace):
         all_scores[question_id] = score
         json.dump(all_scores, args.output_path.open("w"), indent=2)
 
+    all_scores_converted = {item["question_id"]: item["score"] for item in all_scores}
+
     # calculate final score
-    scores = np.array(list(all_scores.values()))
+    scores = np.array(list(all_scores_converted.values()))
     scores = 100.0 * (np.clip(scores, 1, 5) - 1) / 4
     print("final score: {:.1f}".format(np.mean(scores)))
 
